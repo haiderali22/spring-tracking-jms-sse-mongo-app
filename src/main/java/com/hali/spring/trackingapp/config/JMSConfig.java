@@ -7,12 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.dsl.IntegrationFlows;
+import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.jms.dsl.Jms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.hali.spring.trackingapp.model.LocationData;
@@ -61,8 +63,9 @@ public class JMSConfig
 				.from(Jms.messageDrivenChannelAdapter(connectionFactory)
 						.destination(JMSConfig.Location_TOPIC).
 						jmsMessageConverter(messageConverter()))
-				.channel(new PublishSubscribeChannel(null))
-				.log()
+				//.channel(new PublishSubscribeChannel(executor()))					
+//				.channel(MessageChannels.flux())
+				.channel(MessageChannels.queue())
 				.toReactivePublisher();
 	}
 
