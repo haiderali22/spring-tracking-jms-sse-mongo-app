@@ -1,0 +1,22 @@
+package com.hali.spring.trackingapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringTrackingJmsSseMongoAppApplication {
+
+	public static void main(String[] args) {
+		
+//		ActiveMQServer server = ActiveMQServers.newActiveMQServer(new ConfigurationImpl()
+//				.setPersistenceEnabled(false)
+//				.setJournalDirectory("target/data/journal")
+//				.setSecurityEnabled(false)
+//				.addAcceptorConfiguration("invm", "vm://0"));
+//
+//			server.start();
+		
+		SpringApplication.run(SpringTrackingJmsSseMongoAppApplication.class, args);
+	}
+
+}
