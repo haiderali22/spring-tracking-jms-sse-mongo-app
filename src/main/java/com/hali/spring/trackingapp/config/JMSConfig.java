@@ -39,7 +39,7 @@ public class JMSConfig
 	{
 		JmsTemplate template =  new JmsTemplate(connectionFactory);
 		template.setMessageConverter(messageConverter());
-//		template.setPubSubDomain(true);
+		template.setPubSubDomain(true);
 		return template;
 	}
 
