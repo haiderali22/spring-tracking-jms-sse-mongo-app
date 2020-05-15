@@ -23,7 +23,7 @@ class LocationServiceTest
 	@Test
 	void testPushData() 
 	{
-		service.pushData(LocationData.builder().id("11").lat(22.22).lng(77.77).build());
+//		service.pushData(LocationData.builder().id("11").lat(22.22).lng(77.77).build());
 	}
 	
 	

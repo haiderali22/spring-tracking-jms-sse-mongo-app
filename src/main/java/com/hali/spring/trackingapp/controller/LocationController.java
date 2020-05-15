@@ -23,13 +23,13 @@ public class LocationController
 	private final LocationService service;
 	
 	@PostMapping("/location/push")
-	public void pushLocationData(LocationData data)
+	public void pushLocationData(String data)
 	{
 		service.pushData(data);
 	}
 	
 	@GetMapping(path = "/location/watch", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<LocationData> streamLocdata()
+	public Flux<String> streamLocdata()
 	{
 		return 	service.watch();
 	}

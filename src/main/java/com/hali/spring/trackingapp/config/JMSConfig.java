@@ -25,36 +25,37 @@ public class JMSConfig
 {
 	public static final String Location_TOPIC = "locationtopic";
 
-	@Bean
-	public MessageConverter messageConverter(){
-		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-		converter.setTargetType(MessageType.TEXT);
-		converter.setTypeIdPropertyName("_type");
-		return converter;
-	}
+//	@Bean
+//	public MessageConverter messageConverter(){
+//		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+//		converter.setTargetType(MessageType.TEXT);
+//		converter.setTypeIdPropertyName("_type");
+//		return converter;
+//	}
 
 	@Bean
 	public JmsTemplate jmsTopicTemplate(
 			ConnectionFactory connectionFactory) 
 	{
 		JmsTemplate template =  new JmsTemplate(connectionFactory);
-		template.setMessageConverter(messageConverter());
-		template.setPubSubDomain(true);
+//		template.setMessageConverter(messageConverter());
+//		template.setPubSubDomain(true);
 		return template;
 	}
 
 	@Bean
-	public Publisher<Message<LocationData>> jmsReactiveSource(ConnectionFactory connectionFactory) {
-
+	public Publisher<Message<String>> jmsReactiveSource(ConnectionFactory connectionFactory)
+	{
 		return IntegrationFlows
 				.from(Jms.messageDrivenChannelAdapter(connectionFactory)
-						.destination(JMSConfig.Location_TOPIC)
+ 						 .destination(JMSConfig.Location_TOPIC)
 						 .autoStartup(false)
 		                 .id("jmsMessageDrivenChannelAdapter")
-						 .jmsMessageConverter(messageConverter()))
+//						 .jmsMessageConverter(messageConverter())
+						 )
 				//.channel(new PublishSubscribeChannel(executor()))					
 				//.channel(MessageChannels.flux())
-				//.channel(MessageChannels.queue())				
+				//.channel(MessageChannels.queue())
 				.toReactivePublisher();
 	}
 

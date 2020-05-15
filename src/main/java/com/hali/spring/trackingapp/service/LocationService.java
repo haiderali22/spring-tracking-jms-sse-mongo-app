@@ -18,16 +18,16 @@ public class LocationService
 {
 	private final JmsTemplate jmsTopicTemplate;
 //	private final ObjectMapper objectMapper;
-	private final  Publisher<Message<LocationData>> jmsReactiveSource;
+	private final  Publisher<Message<String>> jmsReactiveSource;
 	private final JmsMessageDrivenEndpoint	 jmsMessageDrivenChannelAdapter;
 	
-	public void pushData(LocationData data)
+	public void pushData(String data)
 	{
 		jmsTopicTemplate.convertAndSend(JMSConfig.Location_TOPIC, data);
 
 	}
 
-	public Flux<LocationData> watch() {
+	public Flux<String> watch() {
 		return Flux.from(jmsReactiveSource)
                 .map(Message::getPayload)
                 .doOnSubscribe(s -> jmsMessageDrivenChannelAdapter.start());
