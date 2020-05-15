@@ -35,6 +35,7 @@ class LocationControllerTest
 	@Test
 	void testStreamLocdata() {
 		
+		//fix the test
 		
 		FluxExchangeResult<LocationData> result = client.get().uri("/location/watch")
 		        .accept(MediaType.TEXT_EVENT_STREAM)
