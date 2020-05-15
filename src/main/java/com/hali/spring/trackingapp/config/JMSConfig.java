@@ -52,7 +52,7 @@ public class JMSConfig
 	{
 		JmsTemplate template =  new JmsTemplate(connectionFactory);
 		template.setMessageConverter(messageConverter());
-//		template.setPubSubDomain(true);
+		template.setPubSubDomain(true);
 		return template;
 	}
 
@@ -61,11 +61,15 @@ public class JMSConfig
 
 		return IntegrationFlows
 				.from(Jms.messageDrivenChannelAdapter(connectionFactory)
-						.destination(JMSConfig.Location_TOPIC).
-						jmsMessageConverter(messageConverter()))
+						.destination(JMSConfig.Location_TOPIC)
+						 .autoStartup(false)
+		                 .id("jmsMessageDrivenChannelAdapter")
+						 .jmsMessageConverter(messageConverter()))
 				//.channel(new PublishSubscribeChannel(executor()))					
-//				.channel(MessageChannels.flux())
-				.channel(MessageChannels.queue())
+				//.channel(MessageChannels.flux())
+				//.channel(MessageChannels.queue())
+				
+				
 				.toReactivePublisher();
 	}
 

@@ -3,6 +3,8 @@ package com.hali.spring.trackingapp.service;
 import javax.jms.JMSException;
 
 import org.reactivestreams.Publisher;
+import org.springframework.integration.jms.JmsMessageDrivenEndpoint;
+import org.springframework.integration.jms.dsl.JmsMessageDrivenChannelAdapterSpec;
 import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -25,41 +27,18 @@ public class LocationService
 	private final JmsTemplate jmsTopicTemplate;
 //	private final ObjectMapper objectMapper;
 	private final  Publisher<Message<LocationData>> jmsReactiveSource;
+	private final JmsMessageDrivenEndpoint	 jmsMessageDrivenChannelAdapter;
 	
 	public void pushData(LocationData data)
 	{
 		jmsTopicTemplate.convertAndSend(JMSConfig.Location_TOPIC, data);
 
-		//		Message<LocationData> msg = MessageBuilder.createMessage(data, null);
-
-		//		jmsTopicTemplate.convertAndSend(JMSConfig.Location_TOPIC, new MessageCreator() {
-		//				@Override
-		//				public Message createMessage(Session session) throws JMSException {
-		//					Message mess = null;
-		//
-		//					try 
-		//					{
-		//						mess = session.createTextMessage(objectMapper.writeValueAsString(data));
-		//						//mess.setStringProperty("_type", "java.lang.String");
-		//						return mess;
-		//
-		//					} catch (JsonProcessingException e) {
-		//						throw new JMSException("boom");
-		//					}
-		//				}
-		//			});
-
-		//		try {
-		//			jmsTopicTemplate.convertAndSend(JMSConfig.Location_TOPIC, objectMapper.writeValueAsString(data));
-		//		} catch (JmsException | JsonProcessingException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
 	}
 
 	public Flux<LocationData> watch() {
 		return Flux.from(jmsReactiveSource)
-                .map(Message::getPayload);
+                .map(Message::getPayload)
+                .doOnSubscribe(s -> jmsMessageDrivenChannelAdapter.start());
 	}
 
 }
