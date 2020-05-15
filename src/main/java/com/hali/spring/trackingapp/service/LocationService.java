@@ -1,19 +1,11 @@
 package com.hali.spring.trackingapp.service;
 
-import javax.jms.JMSException;
-
 import org.reactivestreams.Publisher;
 import org.springframework.integration.jms.JmsMessageDrivenEndpoint;
-import org.springframework.integration.jms.dsl.JmsMessageDrivenChannelAdapterSpec;
-import org.springframework.jms.JmsException;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hali.spring.trackingapp.config.JMSConfig;
 import com.hali.spring.trackingapp.model.LocationData;
 

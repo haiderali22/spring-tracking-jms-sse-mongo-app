@@ -33,26 +33,13 @@ public class JMSConfig
 		return converter;
 	}
 
-
-	//	@Bean
-	//	public DefaultJmsListenerContainerFactory jmsTopicListenerContainerFactory(
-	//	        DefaultJmsListenerContainerFactoryConfigurer configurer,
-	//	        ConnectionFactory connectionFactory) 
-	//	{
-	//	    DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-	//	    configurer.configure(factory, connectionFactory);
-	//	    factory.setPubSubDomain(true); 
-	//	    factory.setMessageConverter(messageConverter());
-	//	    return factory;
-	//	}
-	//	
 	@Bean
 	public JmsTemplate jmsTopicTemplate(
 			ConnectionFactory connectionFactory) 
 	{
 		JmsTemplate template =  new JmsTemplate(connectionFactory);
 		template.setMessageConverter(messageConverter());
-		template.setPubSubDomain(true);
+//		template.setPubSubDomain(true);
 		return template;
 	}
 
@@ -67,9 +54,7 @@ public class JMSConfig
 						 .jmsMessageConverter(messageConverter()))
 				//.channel(new PublishSubscribeChannel(executor()))					
 				//.channel(MessageChannels.flux())
-				//.channel(MessageChannels.queue())
-				
-				
+				//.channel(MessageChannels.queue())				
 				.toReactivePublisher();
 	}
 
