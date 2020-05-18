@@ -24,7 +24,6 @@ public class LocationService
 	public void pushData(String data)
 	{
 		jmsTopicTemplate.convertAndSend(JMSConfig.Location_TOPIC, data);
-
 	}
 
 	public Flux<String> watch() {
